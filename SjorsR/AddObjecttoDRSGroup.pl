@@ -68,7 +68,7 @@ die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup
 
 $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("add");
-$groupSpec->{'info'}->{'vm'} = [$object_view->{'mo_ref'}]
+$groupSpec->{'info'}->{'vm'} = [$object_view->{'mo_ref'}];
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
 #print $clusterSpec;
