@@ -53,7 +53,7 @@ unless $cluster_view {
 
 
 my $objects = Vim::find_entity_views(
-                                view_type => "VirtualMachine",
+                                view_type => $drsgroup_type,
                                 filter => { 'name' => $drs_object });
 
 #my $groupSpec = new ClusterGroupSpec();
@@ -64,7 +64,7 @@ my $objects = Vim::find_entity_views(
 $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("add");
 $groupSpec->{'info'} = new ClusterGroupInfo(name=>"drsgroup_name");
-$groupSpec->{'info'}->{vm} = $objects
+$groupSpec->{'info'}->{vm} = $objects;
 $groupSpec->{'name'} = $drsgroup_name;
 #print "GroupSpec : " . $clu_spec . "\n";
 #
