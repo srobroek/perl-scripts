@@ -57,15 +57,15 @@ die "Failed to find host  '$host_name'" unless $host_view;
 die "Failed to find host DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-#$grouphosts = eval { $drsgroup->{'host'} } || [ ];
-#@$grouphosts = grep { $_ != $host_view->{'mo_ref'}} @$grouphosts;
-#print join(", ", @$grouphosts->name);
+$grouphosts = eval { $drsgroup->{'host'} } || [ ];
+@$grouphosts = grep { $_ != $host_view->{'mo_ref'}} @$grouphosts;
+print join("\n", @$grouphosts);
+print $host_view->{'mo_ref'};
 
 $groupSpec = new ClusterGroupSpec();
-$groupSpec->{'operation'} = new ArrayUpdateOperation("remove");
+$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
 $groupSpec->{'info'} = $drsgroup;
-#$groupSpec->{'info'}->{'vm'} = [ @$grouphosts];
-$groupSpec->{'RemoveKey'} = $host_view;
+$groupSpec->{'info'}->{'vm'} = [ @$grouphosts];
 
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
