@@ -45,7 +45,7 @@ die "Failed to find cluster '$cluster_name'" unless $cluster_view;
 $vm_view = Vim::find_entity_view(
 						view_type => "VirtualMachine",
 						filter => { 'name' => $vm_name },
-						properties => [ 'name' ],
+						#properties => [ 'name' ],
 						begin_entity => $cluster_view);
 die "Failed to find virtual machine '$vm_name'" unless $vm_view;
 
@@ -57,17 +57,16 @@ die "Failed to find virtual machine '$vm_name'" unless $vm_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-#$groupvms = eval { $drsgroup->{'vm'} } || [ ];
-#print join("\n", @$groupvms);
-#@$groupvms = grep { $_ != $vm_view->{'mo_ref'}}  @$groupvms;
-#print join("\n", @$groupvms);
+$groupvms = eval { $drsgroup->{'vm'} } || [ ];
+
+@$groupvms = grep { $_ != $vm_view->{'mo_ref'}}  @$groupvms;
+
 #print "\nVMVIEW:".$vm_view->{'mo_ref'};
 
-
 $groupSpec = new ClusterGroupSpec();
-$groupSpec->{'operation'} = new ArrayUpdateOperation("remove");
+$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
 $groupSpec->{'info'} = $drsgroup;
-$groupSpec->{'info'}->{'vm'} = [ $vm_view->{'mo_ref'}];
+$groupSpec->{'info'}->{'host'} = [ @$groupvms ];
 
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
