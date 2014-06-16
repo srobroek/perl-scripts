@@ -34,7 +34,7 @@ Opts::parse();
 Opts::validate();
 Util::connect();
 
-my ($object_name, $drsgroup_name, $cluster_name, $object_view, $cluster_view, $drsgroup, $groupvms,
+my ($object_name, $drsgroup_name, $cluster_name, $object_view, $cluster_view, $drsgroup, $groupobjects,
   $groupSpec, $clusterSpec,$object_type);
 
  $object_name = Opts::get_option("object");
@@ -63,17 +63,18 @@ die "Failed to find object '$object_name'" unless $object_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-$groupvms = eval { $drsgroup->{'object'} } || [ ];
-push @$groupvms, $object_view->{'mo_ref'};
-print "group: " . $drsgroup->name . "\n";
+$groupobjects = eval { $drsgroup->{'object'} } || [ ];
+push @$groupobjects, $object_view->{'mo_ref'};
 
 my $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
-$groupSpec->{'info'}->{'vm'} = [ @$groupvms ];
+$groupSpec->{'info'}->{'vm'} = [ @$groupobjects ];
 
 my $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
-
+print $clusterSpec;
+print $cluster_view;
+print @$groupobjects;
 $cluster_view->ReconfigureComputeResource(spec => $clusterSpec, modify => 1);
 
 Util::disconnect();
