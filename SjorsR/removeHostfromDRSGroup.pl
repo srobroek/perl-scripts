@@ -63,9 +63,9 @@ print join(", ", @$grouphosts);
 
 foreach (@$grouphosts) {
 	if ($_->{'name'} == $host_view->{'mo_ref'}->{'name'}) {
-		print $_->{'name'};
-		print $host_view->{'mo_ref'}->{'name'};
-		print $host_view-{'mo_ref'};
+		print "ARRAY ELEMENT:".$_->{'name'};
+		print "HOST NAME:".$host_view->{'mo_ref'}->{'name'};
+		print "HOST MOREF:".$host_view-{'mo_ref'};
 	}
 }
 $groupSpec = new ClusterGroupSpec();
