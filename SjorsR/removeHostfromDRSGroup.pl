@@ -64,7 +64,7 @@ $grouphosts = eval { $drsgroup->{'host'} } || [ ];
 $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
 $groupSpec->{'info'} = $drsgroup;
-$groupSpec->{'info'}->{'vm'} = [ @$grouphosts];
+$groupSpec->{'info'}->{'host'} = [ @$grouphosts];
 
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
