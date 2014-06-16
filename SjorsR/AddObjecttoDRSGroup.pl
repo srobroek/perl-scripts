@@ -8,7 +8,7 @@ use VMware::VIRuntime;
 my %opts = (
   object => {
     type => "=s",
-    variable => "object",
+    variable => "object_name",
     required => 1,
   },
   cluster => {
@@ -63,11 +63,11 @@ die "Failed to find object '$object_name'" unless $object_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-$groupobjects = eval { $drsgroup->{'object'} } || [ ];
+$groupobjects = eval { $drsgroup->{'object_name'} } || [ ];
 push @$groupobjects, $object_view->{'mo_ref'};
 
 $groupSpec = new ClusterGroupSpec();
-$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
+$groupSpec->{'operation'} = new ArrayUpdateOperation("add");
 $groupSpec->{'info'}->{'vm'} = [ @$groupobjects ];
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
