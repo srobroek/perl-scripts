@@ -58,6 +58,8 @@ die "Failed to find host DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
 $grouphosts = eval { $drsgroup->{'host'} } || [ ];
+print join("\n", @$grouphosts);
+print $host_view->{'mo_ref'};
 @$grouphosts = grep { $_ != $host_view->{'mo_ref'}} @$grouphosts;
 print join("\n", @$grouphosts);
 print $host_view->{'mo_ref'};
