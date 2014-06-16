@@ -6,7 +6,7 @@ use warnings;
 use VMware::VIRuntime;
 
 my %opts = (
-  vm => {
+  object => {
     type => "=s",
     variable => "object",
     required => 1,
@@ -20,6 +20,11 @@ my %opts = (
     type => "=s",
     variable => "drsgroup",
     required => 1,
+  },
+  objecttype => {
+    type => "=s",
+    variable => "object_type",
+    required => 1,
   }
 );
 
@@ -30,7 +35,7 @@ Opts::validate();
 Util::connect();
 
 my ($object_name, $drsgroup_name, $cluster_name, $object_view, $cluster_view, $drsgroup, $groupvms,
-  $groupSpec, $clusterSpec,$objecttype);
+  $groupSpec, $clusterSpec,$object_type);
 
  $object_name = Opts::get_option("object");
  $drsgroup_name = Opts::get_option("drsgroup");
@@ -43,7 +48,7 @@ my ($object_name, $drsgroup_name, $cluster_name, $object_view, $cluster_view, $d
 die "Failed to find cluster '$cluster_name'" unless $cluster_view;
 
  $object_view = Vim::find_entity_view(
-            view_type => $objecttype,
+            view_type => $object_type,
             filter => { 'name' => $object_name },
             properties => [ 'name' ],
             begin_entity => $cluster_view);
