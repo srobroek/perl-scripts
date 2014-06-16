@@ -66,12 +66,12 @@ die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup
 $groupobjects = eval { $drsgroup->{'object'} } || [ ];
 push @$groupobjects, $object_view->{'mo_ref'};
 
-my $groupSpec = new ClusterGroupSpec();
-$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
-$groupSpec->{'info'}->{'vm'} = [ @$groupobjects ];
+#my $groupSpec = new ClusterGroupSpec();
+#$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
+#$groupSpec->{'info'}->{'vm'} = [ @$groupobjects ];
 
-my $clusterSpec = new ClusterConfigSpecEx();
-$clusterSpec->{'groupSpec'} = [ $groupSpec ];
+#my $clusterSpec = new ClusterConfigSpecEx();
+#$clusterSpec->{'groupSpec'} = [ $groupSpec ];
 print $clusterSpec;
 print $cluster_view;
 print @$groupobjects;
