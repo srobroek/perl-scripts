@@ -59,15 +59,8 @@ die "Failed to find host DRS group '$drsgroup_name'" unless $drsgroup;
 #Add virtual machine to the drs group
 $grouphosts = eval { $drsgroup->{'host'} } || [ ];
 @$grouphosts = grep { $_ != $host_view->{'mo_ref'}} @$grouphosts;
-print join(", ", @$grouphosts);
 
-foreach (@$grouphosts) {
-	if ($_->{'name'} == $host_view->{'mo_ref'}->{'name'}) {
-		print "ARRAY ELEMENT:".$_->{'name'};
-		print "HOST NAME:".$host_view->{'mo_ref'}->{'name'};
-		print "HOST MOREF:".$host_view-{'mo_ref'};
-	}
-}
+
 $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
 $groupSpec->{'info'} = $drsgroup;
