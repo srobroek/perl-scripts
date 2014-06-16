@@ -60,7 +60,7 @@ die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup
 $groupvms = eval { $drsgroup->{'vm'} } || [ ];
 print join("\n", @$groupvms);
 print $vm_view->{'mo_ref'};
-@$groupvms = grep { $_ != $vm_view}  @$groupvms;
+@$groupvms = grep { $_ != $vm_view->{'mo_ref'}}  @$groupvms;
 print join("\n", @$groupvms);
 print "\nVMVIEW:".$vm_view->{'mo_ref'};
 
