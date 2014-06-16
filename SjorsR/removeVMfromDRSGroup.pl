@@ -60,7 +60,15 @@ die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup
 $groupvms = eval { $drsgroup->{'vm'} } || [ ];
 
 @$groupvms = grep { $_ != $vm_view->{'mo_ref'}}  @$groupvms;
-
+my $index=0;
+foreach (@$groupvms) {
+	$index++;
+	if $_ == $vm_view-{'mo_ref'} (
+	last;
+	)
+}
+print $index, "\n";
+@$groupvms = splice (@$groupvms, $index, 1);
 #print "\nVMVIEW:".$vm_view->{'mo_ref'};
 
 $groupSpec = new ClusterGroupSpec();
