@@ -62,7 +62,7 @@ $grouphosts = eval { $drsgroup->{'host'} } || [ ];
 print join(", ", @$grouphosts);
 
 foreach (@$grouphosts) {
-	if ()$_->{'name'} == $host_view->{'mo_ref'}->{'name'}) {
+	if ($_->{'name'} == $host_view->{'mo_ref'}->{'name'}) {
 		print "HALLO";
 	}
 }
