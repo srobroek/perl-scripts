@@ -43,7 +43,7 @@ $cluster_view = Vim::find_entity_view(
 die "Failed to find cluster '$cluster_name'" unless $cluster_view;
 
 $host_view = Vim::find_entity_view(
-						view_type => "VirtualMachine",
+						view_type => "HostSystem",
 						filter => { 'name' => $host_name },
 						properties => [ 'name' ],
 						begin_entity => $cluster_view);
