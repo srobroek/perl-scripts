@@ -57,7 +57,7 @@ die "Failed to find virtual machine '$vm_name'" unless $vm_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-$groupvms = eval { $drsgroup->{'vm'} } || [ ];
+$groupvms = eval { $drsgroup->{'vm'}->{'mo_ref'} } || [ ];
 print join("\n", @$groupvms);
 print $vm_view->{'mo_ref'};
 @$groupvms = grep { $_ != $vm_view->{'mo_ref'}}  @$groupvms;
