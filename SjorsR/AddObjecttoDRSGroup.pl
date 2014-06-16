@@ -32,17 +32,17 @@ Util::connect();
 my ($object_name, $drsgroup_name, $cluster_name, $object_view, $cluster_view, $drsgroup, $groupvms,
   $groupSpec, $clusterSpec,$objecttype);
 
-$vm_name = Opts::get_option("object");
-$drsgroup_name = Opts::get_option("drsgroup");
-$cluster_name = Opts::get_option("cluster");
+my $vm_name = Opts::get_option("object");
+my $drsgroup_name = Opts::get_option("drsgroup");
+my $cluster_name = Opts::get_option("cluster");
 
-$cluster_view = Vim::find_entity_view(
+my $cluster_view = Vim::find_entity_view(
             view_type => "ClusterComputeResource",
             filter => { 'name' => $cluster_name },
             properties => [ 'name', 'configurationEx' ]);
 die "Failed to find cluster '$cluster_name'" unless $cluster_view;
 
-$obj_view = Vim::find_entity_view(
+my $obj_view = Vim::find_entity_view(
             view_type => $objecttype,
             filter => { 'name' => $object_name },
             properties => [ 'name' ],
@@ -57,15 +57,15 @@ die "Failed to find object '$object'" unless $object_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-$groupvms = eval { $drsgroup->{'object'} } || [ ];
+my $groupvms = eval { $drsgroup->{'object'} } || [ ];
 push @$groupvms, $vm_view->{'mo_ref'};
 print "group: " . $drsgroup->name . "\n";
 
-$groupSpec = new ClusterGroupSpec();
+my $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
 $groupSpec->{'info'}->{'vm'} = [ @$groupvms ];
 
-$clusterSpec = new ClusterConfigSpecEx();
+my $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
 
 $cluster_view->ReconfigureComputeResource(spec => $clusterSpec, modify => 1);
