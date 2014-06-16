@@ -44,7 +44,7 @@ $cluster_view = Vim::find_entity_view(
         properties => [ 'name', 'configurationEx' ]);
 unless $cluster_view {
   Util::disconnect();
-  die "Failed to find cluster '$cluster_name'"
+  die "Failed to find cluster '$cluster_name'";
 
 }
 
@@ -75,49 +75,6 @@ $groupSpec->{'name'} = $drsgroup_name;
 #$cluster_view->ReconfigureComputeResource(spec => $clusterSpec, modify => 1);
 $cluster_view->ReconfigureComputeResource(spec => $clu_spec, modify => 1);
 print "cluster_view : " . $cluster_view . "\n";
-
-Util::disconnect();
-
-BEGIN {
-  $ENV{PERL_LWP_SSL_VERIFY_HOSTNAME} = 0;
-}
-
-
-
-
-$cluster_view = Vim::find_entity_view(
-            view_type => "ClusterComputeResource",
-            filter => { 'name' => $cluster_name },
-            properties => [ 'name', 'configurationEx' ]);
-die "Failed to find cluster '$cluster_name'" unless $cluster_view;
-
-$vm_view = Vim::find_entity_view(
-            view_type => "VirtualMachine",
-            filter => { 'name' => $vm_name },
-            properties => [ 'name' ],
-            begin_entity => $cluster_view);
-die "Failed to find virtual machine '$vm_name'" unless $vm_view;
-
-# only care about vm drs groups and the specified group name
-($drsgroup) = grep { $_->isa("ClusterVmGroup") and
-            $_->{'name'} eq $drsgroup_name }
-        @{$cluster_view->{'configurationEx'}->{'group'}};
-
-die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
-
-# Add virtual machine to the drs group
-$groupvms = eval { $drsgroup->{'vm'} } || [ ];
-push @$groupvms, $vm_view->{'mo_ref'};
-
-$groupSpec = new ClusterGroupSpec();
-$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
-$groupSpec->{'info'} = $drsgroup;
-$groupSpec->{'info'}->{'vm'} = [ @$groupvms ];
-
-$clusterSpec = new ClusterConfigSpecEx();
-$clusterSpec->{'groupSpec'} = [ $groupSpec ];
-
-$cluster_view->ReconfigureComputeResource(spec => $clusterSpec, modify => 1);
 
 Util::disconnect();
 
