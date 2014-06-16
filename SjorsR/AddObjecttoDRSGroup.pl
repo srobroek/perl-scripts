@@ -35,8 +35,8 @@ my ($drsgroup_name, $cluster_name, , $cluster_view,
 
 $drsgroup_name = Opts::get_option("drsgroup");
 $cluster_name = Opts::get_option("cluster");
-$drsgroup_type = Opts::get_option("drsgroup_type")
-$drs_object = Opts::get_option("drs_object")
+$drsgroup_type = Opts::get_option("drsgroup_type");
+$drs_object = Opts::get_option("drs_object");
 
 $cluster_view = Vim::find_entity_view(
         view_type => "ClusterComputeResource",
