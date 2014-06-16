@@ -65,7 +65,7 @@ $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("remove");
 $groupSpec->{'info'} = $drsgroup;
 #$groupSpec->{'info'}->{'vm'} = [ @$grouphosts];
-$groupSpec->{'RemoveKey'} = $host_view->{'name'};
+$groupSpec->{'RemoveKey'} = $host_view;
 
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];

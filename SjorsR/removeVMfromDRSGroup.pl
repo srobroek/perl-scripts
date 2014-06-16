@@ -65,7 +65,7 @@ die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup
 $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("remove");
 $groupSpec->{'info'} = $drsgroup;
-$groupSpec->{'RemoveKey'} = $vm_view->{'name'};
+$groupSpec->{'RemoveKey'} = $vm_view;
 
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
