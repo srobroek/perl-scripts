@@ -58,7 +58,7 @@ die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup
 
 # Add virtual machine to the drs group
 $groupvms = eval { $drsgroup->{'vm'} } || [ ];
-@$groupvms = grep { $_ != $host_view->{'mo_ref'}}  @$groupvms;
+@$groupvms = grep { $_ != $vm_view->{'mo_ref'}}  @$groupvms;
 print join(", ", @$groupvms)->name;
 
 $groupSpec = new ClusterGroupSpec();
