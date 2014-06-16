@@ -29,7 +29,7 @@ Opts::parse();
 Opts::validate();
 Util::connect();
 
-my ($host_name, $drsgroup_name, $cluster_name, $host_view, $cluster_view, $drsgroup, $groupvms,
+my ($host_name, $drsgroup_name, $cluster_name, $host_view, $cluster_view, $drsgroup, $grouphosts,
 	$groupSpec, $clusterSpec);
 
 $host_name = Opts::get_option("host");
