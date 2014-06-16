@@ -62,6 +62,7 @@ print join("\n", @$groupvms);
 print $vm_view->{'mo_ref'};
 @$groupvms = grep { $_ != $vm_view}  @$groupvms;
 print join("\n", @$groupvms);
+print "\n".$vm_view->{'mo_ref'}
 
 
 $groupSpec = new ClusterGroupSpec();
