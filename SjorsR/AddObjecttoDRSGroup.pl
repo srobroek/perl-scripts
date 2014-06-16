@@ -63,12 +63,12 @@ die "Failed to find object '$object_name'" unless $object_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-$groupobjects = eval { $drsgroup->{'object_name'} } || [ ];
-push @$groupobjects, $object_view->{'mo_ref'};
+#$groupobjects = eval { $drsgroup->{'object_name'} } || [ ];
+#push @$groupobjects, $object_view->{'mo_ref'};
 
 $groupSpec = new ClusterGroupSpec();
 $groupSpec->{'operation'} = new ArrayUpdateOperation("add");
-$groupSpec->{'info'}->{'vm'} = [ @$groupobjects ];
+$groupSpec->{'info'}->{'vm'} = [$object_view->{'mo_ref'}]
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
 #print $clusterSpec;
