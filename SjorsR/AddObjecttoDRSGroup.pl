@@ -32,22 +32,22 @@ Util::connect();
 my ($object_name, $drsgroup_name, $cluster_name, $object_view, $cluster_view, $drsgroup, $groupvms,
   $groupSpec, $clusterSpec,$objecttype);
 
-my $vm_name = Opts::get_option("object");
-my $drsgroup_name = Opts::get_option("drsgroup");
-my $cluster_name = Opts::get_option("cluster");
+ $object_name = Opts::get_option("object");
+ $drsgroup_name = Opts::get_option("drsgroup");
+ $cluster_name = Opts::get_option("cluster");
 
-my $cluster_view = Vim::find_entity_view(
+ $cluster_view = Vim::find_entity_view(
             view_type => "ClusterComputeResource",
             filter => { 'name' => $cluster_name },
             properties => [ 'name', 'configurationEx' ]);
 die "Failed to find cluster '$cluster_name'" unless $cluster_view;
 
-my $obj_view = Vim::find_entity_view(
+ $object_view = Vim::find_entity_view(
             view_type => $objecttype,
             filter => { 'name' => $object_name },
             properties => [ 'name' ],
             begin_entity => $cluster_view);
-die "Failed to find object '$object'" unless $object_view;
+die "Failed to find object '$object_name'" unless $object_view;
 
 # only care about vm drs groups and the specified group name
 ($drsgroup) = grep { $_->isa("ClusterVmGroup") and
@@ -57,8 +57,8 @@ die "Failed to find object '$object'" unless $object_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-my $groupvms = eval { $drsgroup->{'object'} } || [ ];
-push @$groupvms, $vm_view->{'mo_ref'};
+$groupvms = eval { $drsgroup->{'object'} } || [ ];
+push @$groupvms, $object_view->{'mo_ref'};
 print "group: " . $drsgroup->name . "\n";
 
 my $groupSpec = new ClusterGroupSpec();
