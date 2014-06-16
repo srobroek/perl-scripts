@@ -57,7 +57,7 @@ die "Failed to find virtual machine '$vm_name'" unless $vm_view;
 die "Failed to find virtual machine DRS group '$drsgroup_name'" unless $drsgroup;
 
 # Add virtual machine to the drs group
-$groupvms = eval { $drsgroup->{'vm'}->{'mo_ref'} } || [ ];
+$groupvms = eval { $drsgroup->{'vm'} } || [ ];
 print join("\n", @$groupvms);
 print $vm_view->{'mo_ref'};
 @$groupvms = grep { $_ != $vm_view->{'mo_ref'}}  @$groupvms;
@@ -65,9 +65,9 @@ print join("\n", @$groupvms);
 
 
 $groupSpec = new ClusterGroupSpec();
-$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
+$groupSpec->{'operation'} = new ArrayUpdateOperation("remove");
 $groupSpec->{'info'} = $drsgroup;
-$groupSpec->{'info'}->{'vm'} = [ @$groupvms];
+$groupSpec->{'RemoveKey'} = $vm_view->{'moref'};
 
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];

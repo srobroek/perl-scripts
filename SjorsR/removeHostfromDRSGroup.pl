@@ -65,9 +65,9 @@ print join("\n", @$grouphosts);
 print $host_view->{'mo_ref'};
 
 $groupSpec = new ClusterGroupSpec();
-$groupSpec->{'operation'} = new ArrayUpdateOperation("edit");
+$groupSpec->{'operation'} = new ArrayUpdateOperation("remove");
 $groupSpec->{'info'} = $drsgroup;
-$groupSpec->{'info'}->{'vm'} = [ @$grouphosts];
+$groupSpec->{'RemoveKey'} = $host_view->{'moref'};
 
 $clusterSpec = new ClusterConfigSpecEx();
 $clusterSpec->{'groupSpec'} = [ $groupSpec ];
