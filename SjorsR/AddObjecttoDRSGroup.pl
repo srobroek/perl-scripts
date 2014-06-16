@@ -48,7 +48,8 @@ my ($object_name, $drsgroup_name, $cluster_name, $object_view, $cluster_view, $d
 die "Failed to find cluster '$cluster_name'" unless $cluster_view;
 
  $object_view = Vim::find_entity_view(
-            view_type => $object_type,
+#            view_type => $object_type,
+            view_type => "VirtualMachine",
             filter => { 'name' => $object_name },
             properties => [ 'name' ],
             begin_entity => $cluster_view);
